@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: certbot-automator
+  namespace: nginx-rp
+spec:
+  ttlSecondsAfterFinished: 3600
+  template:
+    spec:
+      containers:
+      - name: certbot-automator
+        image: cdevrell/certbot-automator:latest
+        imagePullPolicy: Always
+        env:
+          - name: EmailAddress
+            value: "{UPDATE ME}" 
+        volumeMounts:
+          - name: ssl
+            mountPath: /etc/letsencrypt
+          - name: certs-to-acquire
+            mountPath: /certbot/certs-to-acquire.txt
+            subPath: certs-to-acquire.txt
+      volumes:
+        - name: ssl
+          nfs:
+            path: /ssl
+            server: 10.0.0.3
+        - name: certs-to-acquire
+          configMap:
+              name: certs-to-acquire
+      restartPolicy: OnFailure
+  backoffLimit: 3
+  

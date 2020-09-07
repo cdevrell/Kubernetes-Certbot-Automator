@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: certs-to-acquire
+  namespace: nginx-rp
+data:
+  certs-to-acquire.txt: |
+    # Enter #
+    # a #
+    # domain #
+    # per #
+    # line #

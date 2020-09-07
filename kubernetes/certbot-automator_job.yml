@@ -2,7 +2,6 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: certbot-automator
-  namespace: nginx-rp
 spec:
   ttlSecondsAfterFinished: 3600
   template:
